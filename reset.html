@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पासवर्ड रिसेट | Reset Password</title>
+    <style>
+        :root { --primary: #e11d48; --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 15px; }
+        .card { width: 100%; max-width: 420px; background: rgba(255, 255, 255, 0.98); border-radius: 16px; padding: 30px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        h2 { text-align: center; color: #1e293b; margin-bottom: 20px; font-size: 24px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #334155; font-size: 14px; }
+        input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; }
+        .btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #2563eb; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>पासवर्ड बदलें</h2>
+    <form id="resetForm">
+        <div class="form-group">
+            <label>पंजीकृत ईमेल आईडी (Email)</label>
+            <input type="email" id="email" required placeholder="example@mail.com">
+        </div>
+        <div class="form-group">
+            <label>नया पासवर्ड (New Password)</label>
+            <input type="password" id="newPassword" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn">पासवर्ड अपडेट करें</button>
+        <a href="index.html" class="back-link">साइन इन पेज पर वापस जाएँ</a>
+    </form>
+</div>
+
+<script>
+    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+
+    document.getElementById('resetForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'reset', email: email, newPassword: newPassword })
+            });
+            const result = await res.json();
+            alert(result.message);
+            if(result.status === "SUCCESS") {
+                window.location.href = "index.html";
+            }
+        } catch(err) {
+            alert("त्रुटि: अनुरोध संसाधित नहीं हो सका।");
+        }
+    });
+</script>
+
+</body>
+</html>

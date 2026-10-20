@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>साइन अप (Sign Up)</title>
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px 15px; }
+        .card { width: 100%; max-width: 800px; background: rgba(255, 255, 255, 0.98); border-radius: 16px; padding: 30px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        h2 { text-align: center; color: #1e293b; margin-bottom: 20px; font-size: 24px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .form-group { margin-bottom: 12px; }
+        .full-width { grid-column: 1 / -1; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #334155; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; }
+        .radio-group { display: flex; gap: 20px; padding-top: 5px; }
+        .btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 15px; }
+        .btn:hover { background: var(--primary-hover); }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #2563eb; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>साइन अप फॉर्म (Registration)</h2>
+    <form id="signUpForm">
+        <div class="grid">
+            <div class="form-group">
+                <label>पूरा नाम (Full Name) *</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label>ईमेल आईडी (Email) *</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label>पासवर्ड (Password) *</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label>मोबाइल नंबर (Mobile) *</label>
+                <input type="tel" id="mobile" pattern="[0-9]{10}" placeholder="10 अंकों का नंबर" required>
+            </div>
+            <div class="form-group">
+                <label>गांव / शहर (Village/City) *</label>
+                <input type="text" id="village" required>
+            </div>
+            <div class="form-group">
+                <label>जन्म तिथि (DOB) *</label>
+                <input type="date" id="dob" required>
+            </div>
+            <div class="form-group">
+                <label>जन्म स्थान (Place of Birth) *</label>
+                <input type="text" id="pob" required>
+            </div>
+            <div class="form-group">
+                <label>शैक्षणिक योग्यता (Qualification) *</label>
+                <select id="qualification" required>
+                    <option value="">-- चुनें --</option>
+                    <option value="10th">10th</option>
+                    <option value="12th">12th</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="B.Tech CS">B.Tech CS/IT</option>
+                    <option value="Other">अन्य</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label>पता (Address) *</label>
+                <textarea id="address" rows="2" required></textarea>
+            </div>
+            
+            <div class="form-group full-width">
+                <label>क्या आप ट्रेनिंग लेना चाहते हैं? *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="training" value="Yes" checked onclick="toggleTraining(true)"> हाँ (Yes)</label>
+                    <label><input type="radio" name="training" value="No" onclick="toggleTraining(false)"> नहीं (No)</label>
+                </div>
+            </div>
+
+            <!-- ट्रेनिंग फ़ील्ड्स -->
+            <div class="form-group" id="subjectBox">
+                <label>ट्रेनिंग विषय (Subject) *</label>
+                <select id="subject">
+                    <option value="C/C++">C / C++ Programming</option>
+                    <option value="Java">Core & Advanced Java</option>
+                    <option value="Python">Python Programming</option>
+                    <option value="ReactJS">React.js Frontend</option>
+                    <option value="NodeJS">Node.js Backend</option>
+                    <option value="DBMS">Database / SQL</option>
+                    <option value="DSAlgo">Data Structures & Algorithms</option>
+                </select>
+            </div>
+            <div class="form-group" id="platformBox">
+                <label>ट्रेनिंग ऐप/प्लेटफॉर्म *</label>
+                <select id="platform">
+                    <option value="Google Meet">Google Meet</option>
+                    <option value="Zoom">Zoom</option>
+                </select>
+            </div>
+            <div class="form-group" id="deviceBox">
+                <label>ट्रेनिंग किस डिवाइस पर लेंगे? *</label>
+                <select id="device">
+                    <option value="Laptop/Desktop">Laptop / Desktop</option>
+                    <option value="Mobile/Tablet">Mobile / Tablet</option>
+                </select>
+            </div>
+            <div class="form-group" id="timeBox">
+                <label>सुविधाजनक समय *</label>
+                <input type="time" id="preferredTime">
+            </div>
+            <div class="form-group" id="durationBox">
+                <label>ट्रेनिंग की अवधि (Hours/Days) *</label>
+                <input type="text" id="duration" placeholder="जैसे: 1 Hour/Day या 3 Months">
+            </div>
+
+            <div class="form-group full-width">
+                <label>प्रोफ़ाइल फोटो अपलोड करें *</label>
+                <input type="file" id="image" accept="image/*" required>
+            </div>
+            <div class="form-group full-width">
+                <label>रिमार्क्स (Remarks)</label>
+                <textarea id="remarks" rows="2"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">साइन अप करें</button>
+        <a href="index.html" class="back-link">साइन इन पेज पर वापस जाएँ</a>
+    </form>
+</div>
+
+<script>
+    const SCRIPT_URL = ""; // अपना Deploy Web App URL यहाँ डालें
+
+    function toggleTraining(show) {
+        const display = show ? 'block' : 'none';
+        document.getElementById('subjectBox').style.display = display;
+        document.getElementById('platformBox').style.display = display;
+        document.getElementById('deviceBox').style.display = display;
+        document.getElementById('timeBox').style.display = display;
+        document.getElementById('durationBox').style.display = display;
+    }
+
+    document.getElementById('signUpForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('image').files[0];
+        let imageRaw = "", imageType = "";
+
+        if (fileInput) {
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput);
+            await new Promise(resolve => reader.onload = () => {
+                imageRaw = reader.result;
+                imageType = fileInput.type;
+                resolve();
+            });
+        }
+
+        const formData = {
+            action: 'signup',
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            mobile: document.getElementById('mobile').value,
+            village: document.getElementById('village').value,
+            dob: document.getElementById('dob').value,
+            pob: document.getElementById('pob').value,
+            qualification: document.getElementById('qualification').value,
+            address: document.getElementById('address').value,
+            trainingOption: document.querySelector('input[name="training"]:checked').value,
+            subject: document.getElementById('subject').value,
+            platform: document.getElementById('platform').value,
+            device: document.getElementById('device').value,
+            time: document.getElementById('preferredTime').value,
+            duration: document.getElementById('duration').value,
+            remarks: document.getElementById('remarks').value,
+            imageRaw: imageRaw,
+            imageType: imageType
+        };
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+            const result = await res.json();
+
+            if (result.status === "EXISTS") {
+                alert("We have already registered this email address.");
+            } else if (result.status === "SUCCESS") {
+                alert("Sign Up Successful! Please Sign In.");
+                window.location.href = "index.html"; // साइन इन पेज पर री-डायरेक्ट
+            } else {
+                alert(result.message);
+            }
+        } catch(err) {
+            alert("त्रुटि: डेटा सेव नहीं हो सका।");
+        }
+    });
+</script>
+
+</body>
+</html>

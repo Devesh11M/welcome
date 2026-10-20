@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>साइन इन (Sign In)</title>
-    <!-- यहाँ आपकी CSS स्टाइल होगी -->
+    <title>साइन इन | Portal Login</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 15px; }
+        .card { width: 100%; max-width: 420px; background: rgba(255, 255, 255, 0.98); border-radius: 16px; padding: 30px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        h2 { text-align: center; color: #1e293b; margin-bottom: 20px; font-size: 24px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #334155; font-size: 14px; }
+        input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: 0.2s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+        .btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        .btn:hover { background: var(--primary-hover); }
+        .nav-links { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; }
+        .nav-links a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .nav-links a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>साइन इन (Sign In)</h2>
+    <h2>पोर्टल साइन इन</h2>
     <form id="signInForm">
         <div class="form-group">
             <label for="email">ईमेल आईडी (Email)</label>
@@ -23,15 +42,43 @@
     </form>
 
     <div class="nav-links">
-        <a href="signup.html">नया खाता बनाएँ (Sign Up)</a>
+        <a href="signup.html">नया खाता बनाएँ</a>
         <a href="reset.html">पासवर्ड भूल गए?</a>
     </div>
 </div>
 
-<!-- 🔴 जावास्क्रिप्ट कोड यहाँ लगेगा (</body> से ठीक पहले) 🔴 -->
 <script>
-   <script src="script.js"></script>
-</body></script>
+    // यहाँ अपना गूगल ऐप्स स्क्रिप्ट का डिप्लॉयड वेब ऐप यूआरएल डालें
+    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; 
+
+    document.getElementById('signInForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'signin', email: email, password: password })
+            });
+            const result = await res.json();
+
+            if (result.status === "SUCCESS") {
+                alert("साइन इन सफल! आपको डैशबोर्ड पर ले जाया जा रहा है...");
+                // लॉगिन सफल होने पर गूगल ऐप्स स्क्रिप्ट के अंदर वाले welcome पेज पर रीडायरेक्ट करें
+                window.location.href = SCRIPT_URL + "?page=welcome";
+            } else {
+                // अगर पासवर्ड गलत है या ईमेल नहीं मिला, तो रिसेट का विकल्प दें
+                let userChoice = confirm(result.message + "\n\nक्या आप अपना पासवर्ड रीसेट करना चाहते हैं?");
+                if (userChoice) {
+                    window.location.href = "reset.html"; // या रिसेट पेज का लिंक
+                }
+            }
+        } catch (err) {
+            alert("त्रुटि: सर्वर से संपर्क नहीं हो सका। कृपया पुनः प्रयास करें।");
+        }
+    });
+</script>
 
 </body>
 </html>
