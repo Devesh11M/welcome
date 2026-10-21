@@ -136,7 +136,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOwSur8ZN1mr-PSFYd7M4qUKcOA8sEluuL8muzGImvWTEhR1asoHdHu_0Ye-88iCEN/exec"; // अपना Deploy Web App URL यहाँ डालें
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOwSur8ZN1mr-PSFYd7M4qUKcOA8sEluuL8muzGImvWTEhR1asoHdHu_0Ye-88iCEN/exec";
 
     function toggleTraining(show) {
         const display = show ? 'block' : 'none';
@@ -196,12 +196,12 @@
                 alert("We have already registered this email address.");
             } else if (result.status === "SUCCESS") {
                 alert("Sign Up Successful! Please Sign In.");
-                window.location.href = "index.html"; // साइन इन पेज पर री-डायरेक्ट
+                window.location.href = "index.html";
             } else {
-                alert(result.message);
+                alert(result.message || "डेटा सेव नहीं हुआ");
             }
         } catch(err) {
-            alert(result.message || "डेटा सेव नहीं हुआ");
+            alert("त्रुटि: " + err.message);
         }
     });
 </script>
